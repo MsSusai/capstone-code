@@ -7,7 +7,7 @@ snpfile=/home/riceUsers/xueai/soybean/SNP/genomefile
 
 #计算大豆所有SNP信息的MAF和missing
 #过滤MAF>=0.01 missing<=0.2
-# plink --bfile $snpfile/219_snp --maf 0.01 --geno 0.2 --make-bed --out $snpfile/219_snp_filter
+# plink --bfile /home/riceUsers/xueai/soybean/SNP/genomefile/219_snp --maf 0.01 --geno 0.2 --make-bed --out /home/riceUsers/xueai/soybean/SNP/genomefile/219_snp_filter
 
 #根据range提取cds的SNP
 # plink --bfile $snpfile/219_snp_filter --extract range gene_location_range.txt --make-bed --out cds_snp/cds_rangesnp
@@ -28,11 +28,11 @@ snpfile=/home/riceUsers/xueai/soybean/SNP/genomefile
 
 # find single/ -name "*.map" | awk -F "/" '{print $2}' | awk -F "." '{print $1"."$2}' | sort | uniq > snp_gene_name.txt
 
-# for j in `cat snp_gene_name.txt`
+ for j in `cat snp_gene_name.txt`
 # do
 	# cd single
 	# #获取单倍型
-	# python $scripts/get_haplotype.py $j.ped > ${j}_haplotype.txt
+	 python $scripts/get_haplotype.py $j.ped > ${j}_haplotype.txt
 	# #freq内容提取
 	# python $scripts/get_freq.py ${j}.map ${j}.frq ${j}.lmiss > ${j}_frq_miss.txt
 	# #用haplotype生成
