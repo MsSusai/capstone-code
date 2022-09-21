@@ -63,6 +63,7 @@ def main():
 	# 合并两个表
 	new_df = content_df[["Taxa", year_flag]].merge(haplotype_df.iloc[:][6], left_on="Taxa",
 	                                               right_on=haplotype_df.iloc[:][0])
+	new_df.rename(columns={6: 'haplotype'}, inplace=True)  # 修改表头
 	new_df.to_csv(f"{gene_accession}_{phenotype}_{year_flag}_hap2phe.csv")
 
 
