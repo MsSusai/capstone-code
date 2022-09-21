@@ -54,8 +54,8 @@ do
 		cd result
 		cd Pro_content
 		cd ${n}
-		 python $scripts/get_haplotype_phenotype.py ../../../single/${j}_haplotype.txt $snpfile/Pro_content.txt ${n}> ${j}_Pro_${n}_hap2phe.txt
-		 python $scripts/get_hap2phe_anova.py ${j}_Pro_${n}_hap2phe.txt > anova_${j}_${n}_Pro.txt
+#		 python $scripts/get_haplotype_phenotype.py ../../../single/${j}_haplotype.txt $snpfile/Pro_content.txt ${n}> ${j}_Pro_${n}_hap2phe.txt
+#		 python $scripts/get_hap2phe_anova.py ${j}_Pro_${n}_hap2phe.txt > anova_${j}_${n}_Pro.txt
 		 python $scripts/mean_hap2phe.py ${j}_Pro_${n}_hap2phe.txt Pro_content ../../../single/${j}.map > mean_${j}_${n}_Pro.txt
      python $scripts/get_material2hap.py ../../../single/${j}_haplotype.txt anova_${j}_${n}_Pro.txt > ${j}_material_hap_${n}_Pro.txt
         # # 合并前面两步直接由单倍型文件生成方差分析前需要的表格
