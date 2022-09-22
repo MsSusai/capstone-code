@@ -12,7 +12,7 @@
 # 注释文件
 # /home/riceUsers/lhr/soybean/genomefile/Gmax_275_Wm82.a2.v1.gene.gff3
 
-'''
+"""
 输入
 #gff-version 3
 #annot-version Wm82.a2.v1
@@ -24,9 +24,9 @@ Chr01   phytozomev10    CDS     27926   27991   .       -       1       ID=Glyma
 Chr01   phytozomev10    three_prime_UTR 27355   27655   .       -       .       ID=Glyma.01G000100.1.Wm82.a2.v1.three_prime_UTR.1;Parent=Glyma.01G000100.1.Wm82.a2.v1;pacid=30544134
 Chr01   phytozomev10    CDS     27656   27824   .       -       1       ID=Glyma.01G000100.1.Wm82.a2.v1.CDS.3;Parent=Glyma.01G000100.1.Wm82.a2.v1;pacid=30544134
 Chr01   phytozomev10    gene    58975   67527   .       -       .       ID=Glyma.01G000200.Wm82.a2.v1;Name=Glyma.01G000200
-'''
+"""
 
-'''
+"""
 输出
 1       28139   28218   Glyma.01G000100.1.Wm82.a2.v1.CDS.1      Glyma.01G000100
 1       27926   27991   Glyma.01G000100.1.Wm82.a2.v1.CDS.2      Glyma.01G000100
@@ -36,14 +36,15 @@ Chr01   phytozomev10    gene    58975   67527   .       -       .       ID=Glyma
 1       63066   63141   Glyma.01G000200.1.Wm82.a2.v1.CDS.3      Glyma.01G000200
 1       62567   62644   Glyma.01G000200.1.Wm82.a2.v1.CDS.4      Glyma.01G000200
 1       62006   62045   Glyma.01G000200.1.Wm82.a2.v1.CDS.5      Glyma.01G000200
-'''
+"""
+
 
 def main():
-	gff3_file = "/home/riceUsers/lhr/soybean/genomefile/Gmax_275_Wm82.a2.v1.gene.gff3"
+	gff3_file = "/home/riceUsers/lhr/soybean/genomefile/Gmax_275_Wm82.a2.v1.gene.gff3"  # 基因注释文件
+	chr: str = ""
 	for line in open(gff3_file, 'r'):
-		# 去掉最开头的注释
-		if line.startswith("#"):
-			pass
+		if line.startswith("#"):  # 去掉最开头的注释
+			continue
 		else:
 			if line.strip() is not None:  # 开头和结尾没有空格
 				single_gene = line.strip().split("\t")  # 分割单行
@@ -54,7 +55,7 @@ def main():
 						chr = single_gene[0][-1]  # 染色体编号01-09
 					elif single_gene[0][-2] == "1" or single_gene[0][-2] == "2":
 						chr = single_gene[0][-2:]  # 染色体编号10-20
-					for split in single_gene[-1].split(";"):
+					for split in single_gene[-1].split(";"):  # 分割最后一列提取基因ID号和名称
 						if split.startswith("ID"):
 							id = split.split("=")[1]
 							gene_name = id.split(".")[0] + "." + id.split(".")[1]

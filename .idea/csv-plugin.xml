@@ -3,13 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\Glyma.20G250200_protein_2015yzBL_hap2phe.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\sample_file\Glyma.20G250200_protein_2015yzBL_hap2phe.csv">
           <value>
             <Attribute>
