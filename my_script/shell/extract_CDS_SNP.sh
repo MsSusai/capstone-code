@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 # 计算大豆所有SNP信息的MAF和missing，对缺失数据进行筛选
 # 设置过滤条件 MAF>=0.01 missing<=0.2

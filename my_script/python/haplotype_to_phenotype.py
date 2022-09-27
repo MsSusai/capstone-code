@@ -8,7 +8,7 @@
 
 # 运行：
 # windows: python .\my_script\python\haplotype_to_phenotype.py .\sample_file\Glyma.20G250200_haplotype.txt .\sample_file\Pro_content.txt 2015yzBL Glyma.20G250200 protein
-
+# linux: python /home/riceUsers/lhr/soybean/src/my_script/python_script/haplotype_to_phenotype.py /home/riceUsers/lhr/soybean/temp_file/single/${gene}_haplotype.txt /home/riceUsers/lhr/soybean/genomefile/${phenotype}.txt ${year} ${gene} ${phenotype}
 '''
 输入
 $ head Glyma.20G250200_haplotype.txt
@@ -74,6 +74,8 @@ def main():
 	gene_accession: str = sys.argv[4]  # 基因号
 	phenotype: str = sys.argv[5]  # 表型
 	haplotype: dict = define_haptype(haplotype_df)  # 单倍型
+	
+	print(f"正在关联{gene_accession}基因表型和基因型")
 	
 	# 合并两个表
 	new_df = content_df[["Taxa", year_flag]].merge(haplotype_df.iloc[:][6], left_on="Taxa",
