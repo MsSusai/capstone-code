@@ -1,0 +1,3 @@
+all: 19
+filter: 16
+remain: 3
