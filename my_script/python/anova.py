@@ -17,7 +17,7 @@ from typing import Union
 import pandas as pd
 import numpy as np
 
-from scipy.stats import kstest
+from scipy.stats import shapiro
 from scipy.stats import levene
 from statsmodels.formula.api import ols
 from statsmodels.stats.anova import anova_lm
@@ -38,18 +38,22 @@ def anova_filter(haplotype_df: pd.DataFrame, parameter: str) -> pd.DataFrame:
 	return haplotype_df
 
 
-def normality_test(filtered_haplotype_df: pd.DataFrame):
+def normality_test(filtered_haplotype_df: pd.DataFrame) -> list:
 	"""
 	正态分布检验
-	使用 K-S test
+	使用 S-W test
 	"""
+	result = []
+	flag = True
 	hap_series = pd.Series(filtered_haplotype_df["type"].value_counts())
 	for hap in hap_series.keys():
 		hap_df = filtered_haplotype_df[filtered_haplotype_df["type"] == hap]
-		mean = hap_df["value"].mean()
-		std = hap_df["value"].std()
-		print(kstest(hap_df["value"], 'norm', (mean, std))) # p>0.05符合正态分布
-		
+		stat, pvalue = shapiro(hap_df["value"])
+		if pvalue < 0.05:
+			flag = False
+		result.append([hap, stat, pvalue])  # p>0.05符合正态分布
+	result.append(flag)  # 数据是否满足正态分布
+	return result
 
 
 def main():
@@ -62,26 +66,38 @@ def main():
 	parameter: str = sys.argv[6]  # 规定的参数，作用是:样本总数目*parameter=保留不少于规定数目的单倍型
 	
 	# 输出文件
-	kstest_path: [str, pathlib.Path] = sys.argv[7]  # 正态分布检验文件路径
+	swtest_path: [str, pathlib.Path] = sys.argv[7]  # 正态分布检验文件路径
 	levene_path: [str, pathlib.Path] = sys.argv[8]  # 方差齐性检验文件路径
 	filter_path: [str, pathlib.Path] = sys.argv[9]  # 过滤文件路径
 	filter_list: list = []  # 过滤文件检验结果
 	
-	filtered_haplotype_df = anova_filter(haplotype_df, parameter)  # 过滤满足条件的单倍型
-	# print("There are "
-	#       + str(len(haplotype_df["type"].value_counts()) - len(filtered_haplotype_df["type"].value_counts())) +
-	#       " haplotypes that contain less than 5 materials and are filtered, and the remaining "
-	#       + str(len(filtered_haplotype_df["type"].value_counts())) +
-	#       " haplotypes are used for subsequent analysis.")
-	# # 输出过滤文件检验结果
-	# filter_list.append("all haplotype: " + str(len(haplotype_df["type"].value_counts())) + "\n")
-	# filter_list.append("filtered haplotype: " + str(
-	# 	len(haplotype_df["type"].value_counts()) - len(filtered_haplotype_df["type"].value_counts())) + "\n")
-	# filter_list.append("remain haplotype " + str(len(filtered_haplotype_df["type"].value_counts())) + "\n")
-	# with open(filter_path, "w") as filter_file:
-	# 	filter_file.writelines(filter_list)
+	filtered_haplotype_df = anova_filter(haplotype_df, parameter)  # 过滤满足条件的单倍型-表型
+	print("There are "
+	      + str(len(haplotype_df["type"].value_counts()) - len(filtered_haplotype_df["type"].value_counts())) +
+	      " haplotypes that contain less than 5 materials and are filtered, and the remaining "
+	      + str(len(filtered_haplotype_df["type"].value_counts())) +
+	      " haplotypes are used for subsequent analysis.")
+	# 输出过滤文件检验结果
+	filter_list.append("all haplotype: " + str(len(haplotype_df["type"].value_counts())) + "\n")
+	filter_list.append("filtered haplotype: " + str(
+		len(haplotype_df["type"].value_counts()) - len(filtered_haplotype_df["type"].value_counts())) + "\n")
+	filter_list.append("remain haplotype: " + str(len(filtered_haplotype_df["type"].value_counts())) + "\n")
+	with open(filter_path, "w") as filter_file:
+		filter_file.writelines(filter_list)
 	
-	normality_test(filtered_haplotype_df)
+	if len(filtered_haplotype_df["type"].value_counts()) > 1:  # 检测过滤后满足条件的单倍型-表型组数，不足一组的无法进行方差分析
+		swtest_list = normality_test(filtered_haplotype_df)  # 进行正态性检验
+		print(swtest_list)
+		# 输出正态分布检验文件结果
+		# with open(swtest_path, "w") as swtest_file:
+		# 	swtest_file.writelines(swtest_list)
+		
+		if True in swtest_list:  # 单倍型-表型数据满足正态分布
+			pass
+		else:  # 单倍型-表型数据不满足正态分布
+			print("The data is not completely in accordance with the normal distribution.")
+	else:  # 单倍型-表型数据只有一组或更少，无法进行方差分析
+		print("There is only 1 group of haplotype or less, so the gene could not perform analysis of variance.")
 
 
 if __name__ == '__main__':
