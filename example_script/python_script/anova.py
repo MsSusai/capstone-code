@@ -112,33 +112,33 @@ if len(dir) > 1:
 			F_value = anova_table.loc['C(Type)', 'F']
 			tablename = "./anova_table" + "_" + phy + "_" + name + ".txt"
 			anova_table.to_csv(tablename, sep="\t", na_rep="NA")
-	# 		if PR < 0.05:
-	# 			file1name = "./anova_result" + "_" + phy + "_" + name + ".txt"
-	# 			file1 = open(file1name, "w")
-	# 			file1.write("name\tphenotype\tgroup1\tgroup2\tF_value\tp_value\tmeandiff\tp-adj\n")
-	# 			mc = pairwise_tukeyhsd(df['Value'], df['Type'], alpha=0.05)
-	# 			print(df['Value'])
-	# 			print(df['Type'])
-	# 			# print mylistv
-	# 			# print pd.Series(mylistv)
-	#
-	# 			# print pd.Series(mylistk)
-	# 			# print mylistk
-	# 			# mc = pairwise_tukeyhsd(pd.Series(mylistv),pd.Series(mylistk),alpha=0.05)
-	#
-	# 			# mc = MultiComparison(pd.Series(mylistv),pd.Series(mylistk))
-	# 			# print mc
-	# 			# tukey_result1 = mc.tukeyhsd(alpha = 0.05)
-	# 			# print tukey_result1.summary()
-	# 			print(mc)
-	# 			tukey_result = mc._results_table.data[1:]
-	# 			# print (tukey_result)
-	# 			for line in tukey_result:
-	# 				# if line[-1]=="True":
-	# 				file1.write(name + "\t" + phy + "\t" + line[0] + "\t" + line[1] + "\t" + str(F_value) + "\t" + str(
-	# 					PR) + "\t" + str(line[2]) + "\t" + str(line[3]) + "\n")
-	# 			# print tukey_result
-	# 			# print mc.summary()
+			if PR < 0.05:
+				file1name = "./anova_result" + "_" + phy + "_" + name + ".txt"
+				file1 = open(file1name, "w")
+				file1.write("name\tphenotype\tgroup1\tgroup2\tF_value\tp_value\tmeandiff\tp-adj\n")
+				mc = pairwise_tukeyhsd(df['Value'], df['Type'], alpha=0.05)
+				print(df['Value'])
+				print(df['Type'])
+				# print mylistv
+				# print pd.Series(mylistv)
+
+				# print pd.Series(mylistk)
+				# print mylistk
+				# mc = pairwise_tukeyhsd(pd.Series(mylistv),pd.Series(mylistk),alpha=0.05)
+
+				# mc = MultiComparison(pd.Series(mylistv),pd.Series(mylistk))
+				# print mc
+				# tukey_result1 = mc.tukeyhsd(alpha = 0.05)
+				# print tukey_result1.summary()
+				print(mc)
+				tukey_result = mc._results_table.data[1:]
+				# print (tukey_result)
+				for line in tukey_result:
+					# if line[-1]=="True":
+					file1.write(name + "\t" + phy + "\t" + line[0] + "\t" + line[1] + "\t" + str(F_value) + "\t" + str(
+						PR) + "\t" + str(line[2]) + "\t" + str(line[3]) + "\n")
+				# print tukey_result
+				# print mc.summary()
 	# 		else:
 	# 			print("There is no difference in the average phenotype of the two haplotypes.")
 # 		# else:

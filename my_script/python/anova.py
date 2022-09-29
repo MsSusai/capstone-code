@@ -4,11 +4,11 @@
 # 时间：2022/9/27  16:42 
 # 名称：anova.PY
 # 工具：PyCharm
-# 检验数据正态分布（kstest，p>0.05）、方差齐性（levene,p>0.01）最后做方差分析（F），多重比较（p<0.05）
+# 检验数据正态分布（kstest, p>0.05）、方差齐性（levene, p>0.01）、最后做方差分析（anova_lm, p<0.05）、多重比较（pairwise_tukeyhsd, p<0.05）
 
 # 运行：
-# windows: python .\my_script\python\anova.py .\sample_file\Glyma.20G250200_protein_2015yzBL_hap2phe.csv Pro_content 2015yzBL Glyma.20G250200 0.05 normal_result_Glyma.20G250200_2015_Oil.txt variances_result_Glyma.20G250200_2015_Pro.txt filter_result_Glyma.20G250200_2015_Pro.txt
-# linux: python
+# windows: python .\my_script\python\anova.py .\sample_file\Glyma.01G058100_protein_content_2015yzBL_hap2phe.csv 0.05 normal_result_Glyma.01G058100_2015yzBL_protein.txt variances_result_Glyma.01G058100_2015yzBL_Pro.txt filter_result_Glyma.01G058100_2015yzBL_Pro.txt anova_result_protein_Glyma.01G058100_2015yzBL.txt multiple_comparison_protein_Glyma.01G058100_2015yzBL.csv
+# linux: python /home/riceUsers/lhr/soybean/src/my_script/python_script/anova.py /home/riceUsers/lhr/soybean/output/${phenotype}/${year}/${gene}_${phenotype}_year_hap2phe.csv 0.05 /home/riceUsers/lhr/soybean/output/${phenotype}/${year}/normality_result_${gene}_${year}_${phenotype}.txt /home/riceUsers/lhr/soybean/output/${phenotype}/${year}/variance_homogeneity_result_${gene}_${year}_${phenotype}.txt /home/riceUsers/lhr/soybean/output/${phenotype}/${year}/filter_result_${gene}_${year}_${phenotype}.txt /home/riceUsers/lhr/soybean/output/${phenotype}/${year}/anova_result_${gene}_${year}_${phenotype}.txt /home/riceUsers/lhr/soybean/output/${phenotype}/${year}/multiple_comparison_result_${gene}_${year}_${phenotype}.csv
 
 import sys
 import pathlib
@@ -20,7 +20,7 @@ from scipy.stats import shapiro
 from scipy.stats import levene
 from statsmodels.formula.api import ols
 from statsmodels.stats.anova import anova_lm
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
+from statsmodels.stats import multicomp
 
 
 def anova_filter(haplotype_df: pd.DataFrame, parameter: str) -> pd.DataFrame:
@@ -34,7 +34,8 @@ def anova_filter(haplotype_df: pd.DataFrame, parameter: str) -> pd.DataFrame:
 		if not values:
 			# 将少于10.9个样本的单倍型从表中剔除
 			haplotype_df = haplotype_df[~haplotype_df["type"].isin([hap])]
-	return haplotype_df
+	# print(haplotype_df)
+	return haplotype_df.dropna(axis=0)  # 删除缺失值所在行
 
 
 def normality_test(filtered_haplotype_df: pd.DataFrame) -> list:
@@ -76,29 +77,43 @@ def variance_homogeneity_test(filtered_haplotype_df: pd.DataFrame) -> list:
 	return [stat, p_value, flag]
 
 
-def anova_analysis(filtered_haplotype_df: pd.DataFrame):
-	model = ols('value~C(type)', data=filtered_haplotype_df).fit()
+def anova_analysis(filtered_haplotype_df: pd.DataFrame) -> list:
+	"""
+	单因素方差分析
+	使用 anova_lm
+	p<0.05结果显著
+	"""
+	flag = False
+	model = ols('value~C(type)', data=filtered_haplotype_df).fit()  # 单因素方差分析
 	anova_table = anova_lm(model, typ=2)
 	p_value = anova_table.loc['C(type)', 'PR(>F)']
 	f_value = anova_table.loc['C(type)', 'F']
+	if p_value < 0.05:
+		flag = True
+	return [anova_table, f_value, p_value, flag]
 
 
-def multiple_comparison():
-	pass
+def multiple_comparison(filtered_haplotype_df: pd.DataFrame):
+	"""
+	多重比较
+	使用 pairwise_tukeyhsd
+	p<0.05时结果显著
+	"""
+	return multicomp.pairwise_tukeyhsd(filtered_haplotype_df["value"], filtered_haplotype_df["type"],
+	                                   alpha=0.05)  # 多重比较
 
 
 def main():
 	# 输入文件与参数
 	haplotype_df: pd.DataFrame = pd.read_csv(sys.argv[1], index_col=0)  # 单倍型-表型数据
-	phenotype: str = sys.argv[2]  # 表型
-	year_flag: str = sys.argv[3]  # 年份
-	gene_accession: str = sys.argv[4]  # 基因号
-	parameter: str = sys.argv[5]  # 规定的参数，作用是:样本总数目*parameter=保留不少于规定数目的单倍型
+	parameter: str = sys.argv[2]  # 规定的参数，作用是:样本总数目*parameter=保留不少于规定数目的单倍型
 	
 	# 输出文件
-	swtest_path: Union[str, pathlib.Path] = sys.argv[6]  # 正态分布检验文件路径
-	levene_path: Union[str, pathlib.Path] = sys.argv[7]  # 方差齐性检验文件路径
-	filter_path: Union[str, pathlib.Path] = sys.argv[8]  # 过滤文件路径
+	swtest_path: Union[str, pathlib.Path] = sys.argv[3]  # 正态分布检验文件路径
+	levene_path: Union[str, pathlib.Path] = sys.argv[4]  # 方差齐性检验文件路径
+	filter_path: Union[str, pathlib.Path] = sys.argv[5]  # 过滤文件路径
+	anova_path: Union[str, pathlib.Path] = sys.argv[6]  # 方差分析文件路径
+	tukeyhsd_path: Union[str, pathlib.Path] = sys.argv[7]  # 多重比较文件路径
 	filter_list: list = []  # 过滤文件检验结果
 	
 	filtered_haplotype_df = anova_filter(haplotype_df, parameter)  # 过滤满足条件的单倍型-表型
@@ -120,7 +135,7 @@ def main():
 		# 输出正态分布检验结果
 		with open(swtest_path, "w") as swtest_file:
 			for line in swtest_result:
-				if line is not True or False:
+				if not isinstance(line, bool):
 					swtest_file.writelines(f"haplotype: {line[0]}\n"
 					                       f"statistic: {line[1]}\n"
 					                       f"pvalue: {line[2]}\n" + "\n")
@@ -136,12 +151,20 @@ def main():
 				                       f"variance_homogeneity: {levene_result[2]}\n")
 			
 			if levene_result[2] is True:  # 数据满足方差齐性
-				anova_analysis(filtered_haplotype_df)  # 进行方差分析
-			
+				anova_result: list = anova_analysis(filtered_haplotype_df)  # 进行方差分析
+				anova_result[0].to_csv(anova_path, sep="\t", na_rep="NA")  # 输出方差分析结果
+				# 方差分析显著
+				if anova_result[3] is True:
+					tukeyhsd_result = multiple_comparison(filtered_haplotype_df)  # 进行多重比较
+					tukeyhsd_df = pd.DataFrame(data=tukeyhsd_result._results_table.data[1:],
+					                           columns=tukeyhsd_result._results_table.data[0])  # 将多重比较结果转换成dataframe
+					tukeyhsd_df.to_csv(tukeyhsd_path)  # 输出多重比较结果
+				
+				else:  # 方差分析不显著
+					print("There is no difference in the average phenotype of the two haplotypes")
 			
 			else:  # 数据不满足方差齐性
-				print("There is no difference in the average phenotype of the two haplotypes")
-		
+				print("The haplotypes data do not match variance homogeneity")
 		
 		else:  # 单倍型-表型数据不满足正态分布
 			print("The data is not completely in accordance with the normal distribution")
