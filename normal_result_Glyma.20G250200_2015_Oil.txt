@@ -1,0 +1,21 @@
+haplotype: hap2
+statistic: 0.969079852104187
+pvalue: 0.16735337674617767
+
+haplotype: hap4
+statistic: 0.9503549933433533
+pvalue: 0.08446858078241348
+
+haplotype: hap1
+statistic: 0.9372847080230713
+pvalue: 0.10442738234996796
+
+haplotype: hap6
+statistic: 0.9726268649101257
+pvalue: 0.8453788757324219
+
+haplotype: hap9
+statistic: 0.9665016531944275
+pvalue: 0.8709337115287781
+
+result: True

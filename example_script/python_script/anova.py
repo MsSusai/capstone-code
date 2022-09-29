@@ -44,7 +44,7 @@ for line in open(phyfile, "r"):
 print("flag=" + str(int(m) * float(flag)))# 保留不少于规定数目的单倍型
 
 typenum = len(dir)
-print(typenum)
+# print(typenum)
 nn = 0
 for k, v in list(dir.items()):
 	if len(v) >= int(m) * float(flag): # 保留不少于规定数目的单倍型（300*0.05=15）
@@ -54,11 +54,11 @@ for k, v in list(dir.items()):
 		del dir[k]
 
 		df = df[~df['Type'].isin([k])]  # 将少于15个样本的单倍型剔除
-print(dir)
-print(len(dir))
+# print(dir)
+# print(len(dir))
 cha = typenum - len(dir)
 
-print(df)
+# print(df)
 
 filer = []
 print("There are " + str(
@@ -82,34 +82,36 @@ if len(dir) > 1:
 		normalfile.append("kstest pvalue: " + str(test[1]) + "\n")
 		if test[1] <= 0.05:
 			n += 1
-	print(normalfile)
+	# print(normalfile)
 	
-	# mylist = []
-	# # mylistk = []
-	# # mylistv = []
-	# string = []
-	# levenes = []
-	# head = ""
-	# if m == n:
-	# 	for v1 in list(dir.values()):
-	# 		mylist.append(v1)
-	# 	# print mylist
-	# 	print(mylist)
-		# for k1 in dir.keys():
-		# for v1 in dir[k1]:
-		# mylistv.append(v1)
-		# mylistk.append(k1)
-	# 	stat, p = levene(*mylist)
-	# 	levenes.append("levene Fvalue: " + str(stat) + "\n")
-	# 	levenes.append("levene pvalue: " + str(p) + "\n")
-	# 	if p > 0.01:
-	# 		model = ols('Value~C(Type)', data=df).fit()
-	# 		anova_table = anova_lm(model, typ=2)
-	# 		print(anova_table)
-	# 		PR = anova_table.loc['C(Type)', 'PR(>F)']
-	# 		F_value = anova_table.loc['C(Type)', 'F']
-	# 		tablename = "./anova_table" + "_" + phy + "_" + name + ".txt"
-	# 		anova_table.to_csv(tablename, sep="\t", na_rep="NA")
+	mylist = []
+	mylistk = []
+	mylistv = []
+	string = []
+	levenes = []
+	head = ""
+	if m == n:
+		for v1 in list(dir.values()):
+			mylist.append(v1)
+		# print mylist
+		# print(mylist)
+		for k1 in dir.keys():
+			for v1 in dir[k1]:
+				mylistv.append(v1)
+				mylistk.append(k1)
+		# print(mylist)
+		stat, p = levene(*mylist)
+		levenes.append("levene Fvalue: " + str(stat) + "\n")
+		levenes.append("levene pvalue: " + str(p) + "\n")
+		if p > 0.01:
+			print(df)
+			model = ols('Value~C(Type)', data=df).fit()
+			anova_table = anova_lm(model, typ=2)
+			print(anova_table)
+			PR = anova_table.loc['C(Type)', 'PR(>F)']
+			F_value = anova_table.loc['C(Type)', 'F']
+			tablename = "./anova_table" + "_" + phy + "_" + name + ".txt"
+			anova_table.to_csv(tablename, sep="\t", na_rep="NA")
 	# 		if PR < 0.05:
 	# 			file1name = "./anova_result" + "_" + phy + "_" + name + ".txt"
 	# 			file1 = open(file1name, "w")
@@ -172,6 +174,6 @@ if len(dir) > 1:
 #
 # print(name + ".........finish!!!!!")
 
-w3 = open(output3, "w")
-w3.writelines(filer)
-w3.close()
+# w3 = open(output3, "w")
+# w3.writelines(filer)
+# w3.close()

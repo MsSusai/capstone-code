@@ -1,3 +1,3 @@
 all haplotype: 31
 filtered haplotype: 26
-remain haplotype 5
+remain haplotype: 5
