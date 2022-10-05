@@ -4,7 +4,7 @@
 # 时间：2022/9/27  16:42 
 # 名称：anova.PY
 # 工具：PyCharm
-# 检验数据正态分布（kstest, p>0.05）、方差齐性（levene, p>0.01）、最后做方差分析（anova_lm, p<0.05）、多重比较（pairwise_tukeyhsd, p<0.05）
+# 检验数据正态分布（swtest, p>0.05）、方差齐性（levene, p>0.01）、最后做方差分析（anova_lm, p<0.05）、多重比较（pairwise_tukeyhsd, p<0.05）
 
 # 运行：
 # windows: python .\my_script\python\anova.py .\sample_file\Glyma.01G058100_protein_content_2015yzBL_hap2phe.csv 0.05 normal_result_Glyma.01G058100_2015yzBL_protein.txt variances_result_Glyma.01G058100_2015yzBL_Pro.txt filter_result_Glyma.01G058100_2015yzBL_Pro.txt anova_result_protein_Glyma.01G058100_2015yzBL.txt multiple_comparison_protein_Glyma.01G058100_2015yzBL.csv
@@ -168,15 +168,11 @@ def main():
 		
 		else:  # 单倍型-表型数据不满足正态分布
 			print("The data is not completely in accordance with the normal distribution")
-			with open(levene_path, "w") as levene_file:
-				levene_file.write("The data is not completely in accordance with the normal distribution")
+			
 	
 	else:  # 单倍型-表型数据只有一组或更少，无法进行方差分析
 		print("There is only 1 group of haplotype or less, so the gene could not perform analysis of variance")
-		with open(swtest_path, "w") as swtest_file:
-			swtest_file.write(
-				"There is only 1 group of haplotype or less, so the gene could not perform analysis of variance")
-
+		
 
 if __name__ == '__main__':
 	main()
