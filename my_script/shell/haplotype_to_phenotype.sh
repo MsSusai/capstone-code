@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# nohup sh haplotype_to_phenotype.sh > haplotype_to_phenotype.log 2>&1 &
+
 # 获取每个基因的单倍型
 for gene in $(cat /home/riceUsers/lhr/soybean/temp_file/snp_gene_name.txt)
 do

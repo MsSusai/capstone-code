@@ -3,6 +3,8 @@
 # 计算大豆所有SNP信息的MAF和missing，对缺失数据进行筛选
 # 设置过滤条件 MAF>=0.01 missing<=0.2
 
+# nohup sh extract_CDS_SNP.sh > extract_CDS_SNP.log 2>&1 &
+
 # 输入SNP文件
 # /home/riceUsers/lhr/soybean/genomefile/219_snp/219_snp
 # 输出过滤文件
