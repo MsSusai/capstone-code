@@ -16,13 +16,13 @@ total2015 = 0
 total2016 = 0
 total2017 = 0
 
-files = os.listdir(r"../../result")
+files = os.listdir(r"../../../anova_result_no_normaltest")
 file_name = [file for file in files if "multiple_comparison" in file]
 phenotype = ["grain_weight", "oil_content", "protein_content", "water_soluble_protein"]
 for phe in phenotype:
 	for name in file_name:
 		if phe in name:
-			for line in open(f"../../result/{name}", "r"):
+			for line in open(f"../../anova_result_no_normaltest/{name}", "r"):
 				# print(re.search("Glyma\.[0-9]{2}G[0-9]{6}", line.strip()))
 				if "2015" in name:
 					search = re.search("Glyma\.[0-9]{2}G[0-9]{6}", line.strip())
