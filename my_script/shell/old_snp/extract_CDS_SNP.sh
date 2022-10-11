@@ -10,13 +10,13 @@
 # 输出过滤文件
 # /home/riceUsers/lhr/soybean/temp_file/219_snp_filterdir/219_snp_filter
 
-plink --bfile /home/riceUsers/lhr/soybean/genomefile/219_snp/219_snp --maf 0.01 --geno 0.2 --make-bed --out /home/riceUsers/lhr/soybean/temp_file/219_snp_filterdir/219_snp_filter
+# plink --bfile /home/riceUsers/lhr/soybean/genomefile/219_snp/219_snp --maf 0.01 --geno 0.2 --make-bed --out /home/riceUsers/lhr/soybean/temp_file/219_snp_filterdir/219_snp_filter
 
 # 根据range提取cds的SNP
-plink --bfile /home/riceUsers/lhr/soybean/temp_file/219_snp_filterdir/219_snp_filter --extract range /home/riceUsers/lhr/soybean/temp_file/gene_location.txt --make-bed --out /home/riceUsers/lhr/soybean/temp_file/cds_snp/cds_rangesnp
+# plink --bfile /home/riceUsers/lhr/soybean/temp_file/219_snp_filterdir/219_snp_filter --extract range /home/riceUsers/lhr/soybean/temp_file/gene_location.txt --make-bed --out /home/riceUsers/lhr/soybean/temp_file/cds_snp/cds_rangesnp
 
 # 对提取的cds区域内的基因名称去重
-awk '{print $NF}' /home/riceUsers/lhr/soybean/temp_file/gene_location.txt | sort | uniq > /home/riceUsers/lhr/soybean/temp_file/all_gene_name.txt
+# awk '{print $NF}' /home/riceUsers/lhr/soybean/temp_file/gene_location.txt | sort | uniq > /home/riceUsers/lhr/soybean/temp_file/all_gene_name.txt
 
 # 有SNP的基因名称获取
 for i in $(cat /home/riceUsers/lhr/soybean/temp_file/all_gene_name.txt)
