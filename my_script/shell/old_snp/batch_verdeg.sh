@@ -9,7 +9,7 @@ do
     read -u3
     {	
       cd /home/riceUsers/lhr/soybean/output
-      mkdir ${phenotype}_old_no_normaltest
+      mkdir ${phenotype}_old_no_normaltestq
       cd ${phenotype}_old_no_normaltest
 
       for year in 2015yzBL 2016yzBL 2017yzBL
