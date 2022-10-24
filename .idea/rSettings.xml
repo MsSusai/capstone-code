@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="RSettings">
-    <option name="interpreterPath" value="E:\R语言\R-3.6.3\bin\R.exe" />
+    <option name="interpreterPath" value="E:\R\R-4.0.5\bin\R.exe" />
+    <option name="loadWorkspace" value="true" />
   </component>
 </project>
