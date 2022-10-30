@@ -82,8 +82,9 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="blast.html" class=" hvr-bounce-to-right"><i class="fa fa-search nav_icon"></i> <span
-                                    class="nav-label">Blast</span> </a>
+                            <a href="blast.html" class=" hvr-bounce-to-right"><i class="fa fa-search nav_icon"></i>
+                                <span
+                                        class="nav-label">Blast</span> </a>
                         </li>
 
                         <li>
@@ -91,11 +92,13 @@
                                 <span class="nav-label">Haplotype</span> </a>
                         </li>
                         <li>
-                            <a href="download.html" class=" hvr-bounce-to-right"><i class="fa fa-download nav_icon"></i> <span
-                                    class="nav-label">Download</span> </a>
+                            <a href="download.html" class=" hvr-bounce-to-right"><i class="fa fa-download nav_icon"></i>
+                                <span
+                                        class="nav-label">Download</span> </a>
                         </li>
                         <li>
-                            <a href="help.html" class=" hvr-bounce-to-right"><i class="fa fa-question-circle nav_icon"></i> <span
+                            <a href="help.html" class=" hvr-bounce-to-right"><i
+                                    class="fa fa-question-circle nav_icon"></i> <span
                                     class="nav-label">Help</span> </a>
                         </li>
                     </ul>
@@ -106,10 +109,8 @@
     </nav>
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <div class="content-main">
-
             <!--banner-->
             <div class="banner">
-
                 <h2>
                     <a href="index.html">Home</a>
                     <i class="fa fa-angle-right"></i>
@@ -119,7 +120,46 @@
             <!--//banner-->
 
             <!--主要内容-->
-            <div class="content-top">
+            <div class="blast">
+                <div class="blast-form">
+                    <div class="blast-head">
+                        <h1 id="blast-header">Blast</h1>
+                        <p>Please input the DNA sequences <strong>with fasta format</strong> here to search for the most
+                            similar sequence which are stored in database.</p>
+                    </div>
+                    <form role="form" action="blast.php">
+                        <div class="form-group">
+                            <textarea class="blast-form" id="sequence" spellcheck="false" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="inputfile">
+                                <label for="inputfile">Upload FASTA file</label>
+                                <input type="file" id="inputfile">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                                <label>E-value cutoff</label>
+                                <select class="form-control">
+                                    <option>0.01</option>
+                                    <option selected>1e-5</option>
+                                    <option>1e-10</option>
+                                    <option>1e-50</option>
+                                </select>
+                                <label class="">Max targets</label>
+                                <select class="form-control">
+                                    <option>5</option>
+                                    <option selected>10</option>
+                                    <option>20</option>
+                                    <option>30</option>
+                                </select>
+                            <div class="blast-submit">
+                                <button type="submit" class="btn btn-default">submit</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="clearfix"></div>
+                </div>
 
             </div>
 
