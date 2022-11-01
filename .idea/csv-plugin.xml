@@ -31,6 +31,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\hapdata_for_database\haplotype\oil_content\2015yzBL\Glyma.12G051300_oil_content_2015yzBL_hap2phe.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\sample_file\Glyma.01G001700_protein_hap2phe.csv">
           <value>
             <Attribute>
