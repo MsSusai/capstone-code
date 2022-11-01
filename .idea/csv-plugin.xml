@@ -3,6 +3,34 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\hapdata_for_database\haplotype\grain_weight\2015yzBL\Glyma.01G049300_grain_weight_2015yzBL_hap2phe.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\hapdata_for_database\haplotype\grain_weight\2015yzBL\Glyma.01G167500_grain_weight_2015yzBL_hap2phe.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\hapdata_for_database\haplotype\grain_weight\2016yzBL\Glyma.01G167500_grain_weight_2016yzBL_hap2phe.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\hapdata_for_database\haplotype\grain_weight\2017yzBL\Glyma.01G167500_grain_weight_2017yzBL_hap2phe.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\sample_file\Glyma.01G001700_protein_hap2phe.csv">
           <value>
             <Attribute>
