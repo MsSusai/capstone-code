@@ -1,2 +1,0 @@
-water_soluble_protein  total:1  2015:32  2016:15  2017:7
-Glyma.19G075500
