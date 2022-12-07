@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# nohup sh multiple_data.sh > multiple_data.log 2>&1 &
+# nohup sh multiple_anova_data.sh > multiple_anova_data.log 2>&1 &
 
 for phenotype in $(cat /home/riceUsers/lhr/soybean/genomefile/phenotype.txt)
 do
