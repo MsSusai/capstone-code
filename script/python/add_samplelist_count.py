@@ -9,7 +9,7 @@ import os
 
 countlist = []
 
-path = "../../result/hapdata_for_database/output/"
+path = "../../result/hap/"
 files = os.listdir(path)
 for file in files:
     filepath = path + file
