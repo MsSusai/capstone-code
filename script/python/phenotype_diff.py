@@ -17,28 +17,31 @@ for file in files:
     # print(phenotype_file)
     phe_2015_mean = phenotype_file["2015"].dropna(axis=0).mean()
     phe_2016_mean = phenotype_file["2016"].dropna(axis=0).mean()
-    phe_2017_mean = phenotype_file["2017"].dropna(axis=0).mean()
-    total_mean = (phe_2015_mean + phe_2016_mean + phe_2017_mean) / 3
+    # phe_2017_mean = phenotype_file["2017"].dropna(axis=0).mean()
+    total_mean = (phe_2015_mean + phe_2016_mean) / 2
     per10 = total_mean * 0.10
     per20 = total_mean * 0.20
     per30 = total_mean * 0.30
     per40 = total_mean * 0.40
 
-    phenotype_file = phenotype_file[phenotype_file["Average"] - total_mean < 0]
+
+    phenotype_file = phenotype_file[phenotype_file["Average"] - total_mean > 0] # >0正表型 <0负表型
     # print(len(phenotype_file))
 
-    per_10 = phenotype_file[abs(phenotype_file["Average"] - total_mean) < per10]
+    # 负表型前加abs()
+    # 例：per10_20 = phenotype_file[abs(phenotype_file["Average"] - total_mean) > per10]
+    per_10 = phenotype_file[phenotype_file["Average"] - total_mean < per10]
 
-    per10_20 = phenotype_file[abs(phenotype_file["Average"] - total_mean) > per10]
-    per10_20 = per10_20[abs(phenotype_file["Average"] - total_mean) < per20]
+    per10_20 = phenotype_file[phenotype_file["Average"] - total_mean > per10]
+    per10_20 = per10_20[phenotype_file["Average"] - total_mean < per20]
 
-    per20_30 = phenotype_file[abs(phenotype_file["Average"] - total_mean) > per20]
-    per20_30 = per20_30[abs(phenotype_file["Average"] - total_mean) < per30]
+    per20_30 = phenotype_file[phenotype_file["Average"] - total_mean > per20]
+    per20_30 = per20_30[phenotype_file["Average"] - total_mean < per30]
 
-    per30_40 = phenotype_file[abs(phenotype_file["Average"] - total_mean) > per30]
-    per30_40 = per30_40[abs(phenotype_file["Average"] - total_mean) < per40]
+    per30_40 = phenotype_file[phenotype_file["Average"] - total_mean > per30]
+    per30_40 = per30_40[phenotype_file["Average"] - total_mean < per40]
 
-    per_40 = phenotype_file[abs(phenotype_file["Average"] - total_mean) > per40]
+    per_40 = phenotype_file[phenotype_file["Average"] - total_mean > per40]
 
     # print(len(per_10))
     # print(len(per10_20))
@@ -46,11 +49,11 @@ for file in files:
     # print(len(per30_40))
     # print(len(per_40))
     # print("-----------")
-    per_10.to_csv(f"{filename}_negative10.csv")
-    per10_20.to_csv(f"{filename}_negative10_20.csv")
-    per20_30.to_csv(f"{filename}_negative20_30.csv")
-    per30_40.to_csv(f"{filename}_negative30_40.csv")
-    per_40.to_csv(f"{filename}_negative40.csv")
+    per_10.to_csv(f"{filename}_10.csv")
+    per10_20.to_csv(f"{filename}_10_20.csv")
+    per20_30.to_csv(f"{filename}_20_30.csv")
+    per30_40.to_csv(f"{filename}_30_40.csv")
+    per_40.to_csv(f"{filename}_40.csv")
 
 
 

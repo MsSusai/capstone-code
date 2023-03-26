@@ -18,15 +18,18 @@ outputpath = sys.argv[6]
 
 multdata2015 = pd.read_csv(multpath_2015, keep_default_na=False)
 multdata2016 = pd.read_csv(multpath_2016, keep_default_na=False)
-multdata2017 = pd.read_csv(multpath_2017, keep_default_na=False)
+# multdata2017 = pd.read_csv(multpath_2017, keep_default_na=False)
 
 hap2015 = multdata2015[multdata2015["reject"] == True]
 hap2016 = multdata2016[multdata2016["reject"] == True]
-hap2017 = multdata2017[multdata2017["reject"] == True]
+# hap2017 = multdata2017[multdata2017["reject"] == True]
 hapmergedf = hap2016.merge(hap2015, on=["group1", "group2", "reject"])
-hapmergedf = hapmergedf.merge(hap2017, on=["group1", "group2", "reject"])
+# hapmergedf = hapmergedf.merge(hap2017, on=["group1", "group2", "reject"])
 hapmergedf["loc"] = gene_loc
 hapmergedf["trait"] = phenotype
 newhapdf = pd.DataFrame(hapmergedf,
-                        columns=["loc", "trait", "group1", "group2", "meandiff", "p-adj", "lower", "upper", "reject"])
+                        columns=["loc", "trait", "group1", "group2", "meandiff_x", "p-adj_x", "lower_x", "upper_x", "reject"])
+# print(hapmergedf)
+# print(hap2016)
+# print(newhapdf)
 newhapdf.to_csv(outputpath, mode="a+", index=False, header=False)
