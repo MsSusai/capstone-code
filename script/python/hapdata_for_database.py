@@ -20,29 +20,33 @@ outputpath = sys.argv[9]
 
 hapdata_2015 = pd.read_csv(happath_2015).dropna(axis=0)
 hapdata_2016 = pd.read_csv(happath_2016).dropna(axis=0)
-hapdata_2017 = pd.read_csv(happath_2017).dropna(axis=0)
+# hapdata_2017 = pd.read_csv(happath_2017).dropna(axis=0)
 
 multdata2015 = pd.read_csv(multpath_2015)
 multdata2016 = pd.read_csv(multpath_2016)
-multdata2017 = pd.read_csv(multpath_2017)
+# multdata2017 = pd.read_csv(multpath_2017)
 
 hap2015 = multdata2015[multdata2015["reject"] == True]
 hap2016 = multdata2016[multdata2016["reject"] == True]
-hap2017 = multdata2017[multdata2017["reject"] == True]
+# hap2017 = multdata2017[multdata2017["reject"] == True]
 
 hapdict = {}
 hapmergedf = hap2016.merge(hap2015, on=["group1", "group2", "reject"])
-hapmergedf = hapmergedf.merge(hap2017, on=["group1", "group2", "reject"])
+# hapmergedf = hapmergedf.merge(hap2017, on=["group1", "group2", "reject"])
 if not hapmergedf.empty:
     hapgroup1 = hapmergedf["group1"]
     hapgroup2 = hapmergedf["group2"]
     for hap1, hap2 in zip(hapgroup1, hapgroup2):
+        # hap1mean = round((hapdata_2015[hapdata_2015["type"] == hap1]["value"].mean() +
+        #                   hapdata_2016[hapdata_2016["type"] == hap1]["value"].mean() +
+        #                   hapdata_2017[hapdata_2017["type"] == hap1]["value"].mean()) / 3, 3)
         hap1mean = round((hapdata_2015[hapdata_2015["type"] == hap1]["value"].mean() +
-                          hapdata_2016[hapdata_2016["type"] == hap1]["value"].mean() +
-                          hapdata_2017[hapdata_2017["type"] == hap1]["value"].mean()) / 3, 3)
+                          hapdata_2016[hapdata_2016["type"] == hap1]["value"].mean()) / 2, 3)
+        # hap2mean = round((hapdata_2015[hapdata_2015["type"] == hap2]["value"].mean() +
+        #                   hapdata_2016[hapdata_2016["type"] == hap2]["value"].mean() +
+        #                   hapdata_2017[hapdata_2017["type"] == hap2]["value"].mean()) / 3, 3)
         hap2mean = round((hapdata_2015[hapdata_2015["type"] == hap2]["value"].mean() +
-                          hapdata_2016[hapdata_2016["type"] == hap2]["value"].mean() +
-                          hapdata_2017[hapdata_2017["type"] == hap2]["value"].mean()) / 3, 3)
+                          hapdata_2016[hapdata_2016["type"] == hap2]["value"].mean()) / 2, 3)
         hap1snp = hapdata_2015[hapdata_2015["type"] == hap1]["haplotype"].iloc[0]
         hap2snp = hapdata_2015[hapdata_2015["type"] == hap2]["haplotype"].iloc[0]
         sample1 = hapdata_2015[hapdata_2015["type"] == hap1]["sample"].values.tolist()
