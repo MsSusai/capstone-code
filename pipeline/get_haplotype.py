@@ -41,30 +41,30 @@ import sys
 
 
 def main():
-	hap_dir: dict = {"AG": "R", "GA": "R",
-	                 "GC": "S", "CG": "S",
-	                 "GT": "K", "TG": "K",
-	                 "AC": "M", "CA": "M",
-	                 "AT": "W", "TA": "W",
-	                 "TC": "Y", "CT": "Y"}  # 兼并碱基表示
-	
-	for line in open(sys.argv[1], "r"):
-		haplotype_line = line.strip().split(" ")  # 分割每一行
-		# print(haplotype_line)
-		haplotype: str = ""
-		string: list = haplotype_line[:5 + 1]  # 取前面的注释
-		
-		for i in range(6, len(haplotype_line), 2):  # 从列表第六位开始是父母本碱基
-			if "0" not in (haplotype_line[i], haplotype_line[i + 1]):  # 0为缺失
-				if haplotype_line[i] == haplotype_line[i + 1]:  # 纯合
-					haplotype += haplotype_line[i]
-				elif haplotype_line[i] + haplotype_line[i + 1] in hap_dir.keys():  # 杂合
-					haplotype += hap_dir[haplotype_line[i] + haplotype_line[i + 1]]
-			else:
-				haplotype += "-"  # 碱基缺失
-		
-		string.append(haplotype)
-		print(" ".join(string))
+    hap_dir: dict = {"AG": "R", "GA": "R",
+                     "GC": "S", "CG": "S",
+                     "GT": "K", "TG": "K",
+                     "AC": "M", "CA": "M",
+                     "AT": "W", "TA": "W",
+                     "TC": "Y", "CT": "Y"}  # 兼并碱基表示
+
+    for line in open(sys.argv[1], "r"):
+        haplotype_line = line.strip().split(" ")  # 分割每一行
+        # print(haplotype_line)
+        haplotype: str = ""
+        string: list = haplotype_line[:5 + 1]  # 取前面的注释
+        
+        for i in range(6, len(haplotype_line), 2):  # 从列表第六位开始是父母本碱基
+            if "0" not in (haplotype_line[i], haplotype_line[i + 1]):  # 0为缺失
+                if haplotype_line[i] == haplotype_line[i + 1]:  # 纯合
+                    haplotype += haplotype_line[i]
+                elif haplotype_line[i] + haplotype_line[i + 1] in hap_dir.keys():  # 杂合
+                    haplotype += hap_dir[haplotype_line[i] + haplotype_line[i + 1]]
+            else:
+                haplotype += "-"  # 碱基缺失
+        
+        string.append(haplotype)
+        print(" ".join(string))
 
 
 if __name__ == '__main__':

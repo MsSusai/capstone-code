@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="3b78c9f6-9da3-4304-bed8-ac31bc48f8a8" name="azure">
-        <fileTransfer rootFolder="/home/lhr" accessType="SFTP" host="20.189.125.164" port="22" sshConfigId="5829892a-fb5a-468d-ab8c-afdddc6deab7" sshConfig="lhr@20.189.125.164:22 password">
+        <fileTransfer rootFolder="/home/lhr/code" accessType="SFTP" host="20.189.125.164" port="22" sshConfigId="5829892a-fb5a-468d-ab8c-afdddc6deab7" sshConfig="lhr@20.189.125.164:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

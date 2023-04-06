@@ -58,37 +58,37 @@ import pandas as pd
 
 # 返回单倍型分类
 def define_haptype(haplotype_df: pd.DataFrame) -> dict:
-	haplotype: dict = {}
-	i: int = 1
-	for hap in haplotype_df.iloc[:][6]:
-		if hap not in haplotype.keys():
-			haplotype[hap] = "hap" + str(i)
-			i += 1
-	return haplotype
+    haplotype: dict = {}
+    i: int = 1
+    for hap in haplotype_df.iloc[:][6]:
+        if hap not in haplotype.keys():
+            haplotype[hap] = "hap" + str(i)
+            i += 1
+    return haplotype
 
 
 def main():
-	haplotype_df: pd.DataFrame = pd.read_table(sys.argv[1], header=None, sep=" ")  # 单倍型数据
-	content_df: pd.DataFrame = pd.read_table(sys.argv[2])  # 表型数据
-	year_flag: str = sys.argv[3]  # 年份
-	gene_accession: str = sys.argv[4]  # 基因号
-	phenotype: str = sys.argv[5]  # 表型
-	haplotype: dict = define_haptype(haplotype_df)  # 单倍型
-	
-	print(f"正在关联{gene_accession}基因表型和基因型")
-	
-	# 合并两个表
-	new_df = content_df[["Taxa", year_flag]].merge(haplotype_df.iloc[:][6], left_on="Taxa",
-	                                               right_on=haplotype_df.iloc[:][0])
-	new_df['type'] = None  # 创造单倍型type新列
-	
-	for key, value in haplotype.items():
-		new_df.type[new_df[6] == key] = value  # 赋予单倍型
-	
-	new_df.rename(columns={6: 'haplotype', 'Taxa': 'sample', year_flag: 'value'},
-	              inplace=True)  # 修改表头
-	
-	new_df.to_csv(f"{gene_accession}_{phenotype}_{year_flag}_hap2phe.csv")  # 输出
+    haplotype_df: pd.DataFrame = pd.read_table(sys.argv[1], header=None, sep=" ")  # 单倍型数据
+    content_df: pd.DataFrame = pd.read_table(sys.argv[2])  # 表型数据
+    year_flag: str = sys.argv[3]  # 年份
+    gene_accession: str = sys.argv[4]  # 基因号
+    phenotype: str = sys.argv[5]  # 表型
+    haplotype: dict = define_haptype(haplotype_df)  # 单倍型
+
+    print(f"正在关联{gene_accession}基因表型和基因型")
+
+    # 合并两个表
+    new_df = content_df[["Taxa", year_flag]].merge(haplotype_df.iloc[:][6], left_on="Taxa",
+                                                   right_on=haplotype_df.iloc[:][0])
+    new_df['type'] = None  # 创造单倍型type新列
+
+    for key, value in haplotype.items():
+        new_df.type[new_df[6] == key] = value  # 赋予单倍型
+
+    new_df.rename(columns={6: 'haplotype', 'Taxa': 'sample', year_flag: 'value'},
+                  inplace=True)  # 修改表头
+
+    new_df.to_csv(f"{gene_accession}_{phenotype}_{year_flag}_hap2phe.csv")  # 输出
 
 
 if __name__ == '__main__':

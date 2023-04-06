@@ -10,7 +10,7 @@ import patchworklib as pw
 import pandas as pd
 from scipy.stats import kstest
 
-data = pd.read_table("../../result/grain_weight.txt")
+data = pd.read_table("../../../phenotype/grain_weight.txt")
 
 stat2015, ks_value_2015 = kstest(data["2015"].dropna(axis=0), 'norm',
                                  (data["2015"].mean(), data["2015"].std()))
@@ -27,7 +27,7 @@ plot2015 = ggplot(data, aes(sample="2015")) \
            + geom_qq_line() \
            + ylab("2015") \
            + theme(plot_title=element_text(face="bold", size=14), ) \
-           + ggtitle("Water Soluble Protein Content Normality Test\n"
+           + ggtitle("Grain Weight Normality Test\n"
                      f"\nKolmogorov-Smirnov test value: {ks_value_2015}")
 
 plot2016 = ggplot(data, aes(sample="2016")) \
@@ -35,7 +35,7 @@ plot2016 = ggplot(data, aes(sample="2016")) \
            + geom_qq_line() \
            + ylab("2016") \
            + theme(plot_title=element_text(face="bold", size=14), ) \
-           + ggtitle("Water Soluble Protein Content Normality Test\n"
+           + ggtitle("Grain Weight Normality Test\n"
                      f"\nKolmogorov-Smirnov test value: {ks_value_2016}")
 
 plot2017 = ggplot(data, aes(sample="2017")) \
@@ -43,7 +43,7 @@ plot2017 = ggplot(data, aes(sample="2017")) \
            + geom_qq_line() \
            + ylab("2017") \
            + theme(plot_title=element_text(face="bold", size=14), ) \
-           + ggtitle("Water Soluble Protein Content Normality Test\n"
+           + ggtitle("Grain Weight Normality Test\n"
                      f"\nKolmogorov-Smirnov test value: {ks_value_2017}")
 
 g1 = pw.load_ggplot(plot2015, figsize=(3, 3))
