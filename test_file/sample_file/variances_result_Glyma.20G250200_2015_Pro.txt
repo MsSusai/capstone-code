@@ -1,2 +1,0 @@
-levene Fvalue: 2.0423225013216437
-levene pvalue: 0.09147080576469221

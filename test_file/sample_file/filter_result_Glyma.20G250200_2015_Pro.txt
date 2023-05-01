@@ -1,3 +1,0 @@
-all: 31
-filter: 26
-remain: 5
